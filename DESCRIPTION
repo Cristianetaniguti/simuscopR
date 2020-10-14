@@ -1,0 +1,24 @@
+Package: simuscopR
+Title: Wrap-up R package to coordinate SimusCop simulations. 
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Cristiane",
+           family = "Taniguti",
+           role = c("aut", "cre"),
+           email = "chtaniguti@usp.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Wrap-up R package to coordinate SimusCop simulations. 
+             Also, here we present a easy conversion of VCF files 
+             in variations and snp files for SimuSCoP simuReads. 
+             This tools is useful if you want to simulate Illumina 
+             reads based on empirical variations already stored in a VCF file.
+Depends: R (>= 3.6.0)
+Imports: intervals,
+         vcfR,
+         dplyr
+Suggests: vcfR (>= 1.6.0),
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1

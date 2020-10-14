@@ -1,2 +1,4 @@
 ^onemap\.Rproj$
 ^\.Rproj\.user$
+^tests$
+^\.dockerfile$

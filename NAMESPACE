@@ -2,6 +2,7 @@
 
 export(AdaptBed)
 export(create_founderfiles)
+export(seqToProfile)
 export(vcf2variants)
 import(dplyr)
 import(intervals)

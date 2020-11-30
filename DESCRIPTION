@@ -13,8 +13,7 @@ Description: Wrap-up R package to coordinate SimusCop simulations.
              This tools is useful if you want to simulate Illumina 
              reads based on empirical variations already stored in a VCF file.
 Depends: R (>= 3.6.0)
-Imports: intervals,
-         vcfR,
+Imports: vcfR,
          dplyr
 Suggests: vcfR (>= 1.6.0),
 License: GPL-3

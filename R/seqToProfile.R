@@ -9,9 +9,18 @@
 #' @export
 seqToProfile <- function(bam.file = NULL, bed.file = NULL, vcf.file = NULL, 
                          reference = NULL, out.profile = NULL){
-  system(
-    paste0(system.file(package="simuscopR"),"/SimusCop/seqToProfile",
-           " -b ", bam.file, " -t ", bed.file, " -v ", vcf.file, " -r ", reference, 
-           " > ", out.profile)
-  )
+  
+  if(is.null(bed.file)){
+    system(
+      paste0(system.file(package="simuscopR"),"/SimusCop/seqToProfile",
+             " -b ", bam.file, " -v ", vcf.file, " -r ", reference, 
+             " > ", out.profile)
+    )
+  } else {
+    system(
+      paste0(system.file(package="simuscopR"),"/SimusCop/seqToProfile",
+             " -b ", bam.file, " -t ", bed.file, " -v ", vcf.file, " -r ", reference, 
+             " > ", out.profile)
+    )
+  }
 }

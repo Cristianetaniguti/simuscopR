@@ -21,24 +21,24 @@ All inputs must have information for just one chromosome and one sample.
 If you need to filter the files to keep only one chromosome, we suggest:
 
 ```{bash, eval=FALSE}
-docker run -v $(pwd):/ cristaniguti/r-samtools samtools view -b /your_bam_file Chr10 > filtered_bam
+docker run -v $(pwd):/opt cristaniguti/r-samtools samtools view -b /opt/your_bam_file Chr10 > filtered_bam
 
-docker run -v $(pwd):/ cristaniguti/vcftools vcftools --gzvcf /vcf.file.gz --indv ID1 --chr Chr01 --recode --out vcf_filt
+docker run -v $(pwd):/opt/ cristaniguti/vcftools vcftools --gzvcf /opt/vcf.file.gz --indv ID1 --chr Chr01 --recode --out /opt/vcf_filt
 ```
 
 To obtain the BED file from the BAM file
 
 ```{bash}
-docker run -it -v $(pwd):/data  biocontainers/bedtools:v2.28.0_cv1 bamtobed -i filtered_bam > bed_file
+docker run -it -v $(pwd):/data  biocontainers/bedtools:v2.28.0_cv1 bamtobed -i /data/filtered_bam > bed_file
 ```
 
 # Create profile
 
 ```{r}
-seqToProfile("PT_F.sorted.bam", "PT_F.sorted_filt.bed", "gatk_chr10_PT_F.recode.vcf",
-             "references/Chr10.populus.fa", "PT_F.profile")
+seqToProfile("PT_F.chr10.sorted.bam", "bed_file", "vcf_chr10.recode.vcf",
+             "../reference/Chr10.populus.fa", "PT_F.profile")
 
-AdaptBed(bed.file = "PT_F.sorted_filt.bed", out.file = "PT_F.sorted_filt_edit2.bed", int.size = 500)
+AdaptBed(bed.file = "PT_F.sorted_filt.bed", out.file = "PT_F.sorted_filt_edit3.bed", int.size = 500)
 ```
 
 # Variants files
@@ -77,10 +77,9 @@ simuReads(ref = "references/Ptrichocarpa_533_v4.0.fa",
 
 ```{bash}
 docker run -v $(pwd):/data  kfdrc/bwa-picard:latest-dev  bin/bwa mem -t 2  \
-data/references/Ptrichocarpa_533_v4.0.fa data/results/P1_100_150_1_2enz.fq.gz | \
-java -jar /picard.jar SortSam \
-I=/dev/stdin \
-O="data/results/P1_2enz.bam" \
+/data/reference/Ptrichocarpa_533_v4.0.fa /data/two_enzy/P1_100_150_1.fq.gz | java -jar /picard.jar SortSam \
+I="file.bam" \
+O="/data/P1_2enz2.bam" \
 TMP_DIR=./tmp \
 SORT_ORDER=coordinate \
 CREATE_INDEX=true

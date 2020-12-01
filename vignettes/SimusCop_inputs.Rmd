@@ -7,7 +7,23 @@ Wrap-up R package to coordinate SimusCop simulations.
 
 Also, here we present a easy conversion of VCF files in variations and snp files for SimuSCoP simuReads. This tools is useful if you want to simulate Illumina reads based on empirical variations already stored in a VCF file.
 
-Just use Docker!
+# Install SimusCopR
+
+Install from GitHub:
+
+```{r}
+library(devtools)
+
+install_github("Cristianetaniguti/simuscopR")
+```
+
+It also requires samtools installed.
+
+Or use the Docker image:
+
+```{bash}
+docker pull cristaniguti/simuscopr:latest
+```
 
 # Input files
 
@@ -23,22 +39,27 @@ If you need to filter the files to keep only one chromosome, we suggest:
 ```{bash, eval=FALSE}
 docker run -v $(pwd):/opt cristaniguti/r-samtools samtools view -b /opt/your_bam_file Chr10 > filtered_bam
 
-docker run -v $(pwd):/opt/ cristaniguti/vcftools vcftools --gzvcf /opt/vcf.file.gz --indv ID1 --chr Chr01 --recode --out /opt/vcf_filt
+docker run -v $(pwd):/opt cristaniguti/vcftools vcftools --gzvcf /opt/vcf.file.gz --indv ID1 --chr Chr01 --recode --out vcf_filt
 ```
 
 To obtain the BED file from the BAM file
 
 ```{bash}
-docker run -it -v $(pwd):/data  biocontainers/bedtools:v2.28.0_cv1 bamtobed -i /data/filtered_bam > bed_file
+docker run -it -v $(pwd):/data  biocontainers/bedtools:v2.28.0_cv1 bamtobed -i /data/PT_F.chr.sorted.bam > /data/PT_F.sorted_filt.bed
 ```
 
 # Create profile
 
-```{r}
-seqToProfile("PT_F.chr10.sorted.bam", "bed_file", "vcf_chr10.recode.vcf",
-             "../reference/Chr10.populus.fa", "PT_F.profile")
+```{bash}
+docker run -it -v $(pwd):/opt cristaniguti/simuscopr 
 
-AdaptBed(bed.file = "PT_F.sorted_filt.bed", out.file = "PT_F.sorted_filt_edit3.bed", int.size = 500)
+```
+
+```{r}
+setwd("/opt")
+seqToProfile("PT_F.chr.sorted.bam", "PT_F.sorted_filt.bed", "gatk_chr10_PT_F.recode.vcf",
+             "reference/Chr10.populus.fa", "PT_F.profile")
+
 ```
 
 # Variants files
@@ -60,12 +81,12 @@ system("cat SNVs.txt indels.txt insertions.txt > variants.txt")
 # Run simulation
 
 ```{r}
-simuReads(ref = "references/Ptrichocarpa_533_v4.0.fa",
+simuReads(ref = "reference/Chr10.populus.fa",
           profile = "PT_F.profile",
           variation = "variants.txt",
-          target = "PT_F.sorted_filt_edit2.bed",
+          target = "PT_F.sorted_filt.bed",
           name = "PT_F",
-          output = "./results",
+          output = ".",
           layout = "SE",
           threads = 6,
           verbose = 1,
@@ -86,8 +107,5 @@ CREATE_INDEX=true
 
 # Images on IGV
 ```
-
-
-# Simulation with Reseq
 
 

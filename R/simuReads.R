@@ -26,7 +26,7 @@ simuReads <- function(ref = NULL,
                       coverage = NULL, 
                       insertSize = NULL){
   
-  configs <- c(ref=ref, profile=profile,variation=profile, target=target, 
+  configs <- c(ref=ref, profile=profile,variation=variation, target=target, 
                name=name, output=output, layout=layout, 
                threads=threads, verbose=verbose, coverage=coverage, insertSize=insertSize)
   

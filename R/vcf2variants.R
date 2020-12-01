@@ -8,6 +8,7 @@
 #'
 #' @return list with data.frames for SNVs, indels and insertions
 #'
+#' @importFrom  stringr str_length str_sub
 #' @import dplyr
 #'
 #' @export

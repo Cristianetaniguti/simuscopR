@@ -1,4 +1,4 @@
 ^onemap\.Rproj$
 ^\.Rproj\.user$
-^tests$
+^eval_simulator$
 ^\.dockerfile$

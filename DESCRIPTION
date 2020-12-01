@@ -14,7 +14,8 @@ Description: Wrap-up R package to coordinate SimusCop simulations.
              reads based on empirical variations already stored in a VCF file.
 Depends: R (>= 3.6.0)
 Imports: vcfR,
-         dplyr
+         dplyr,
+         stringr
 Suggests: vcfR (>= 1.6.0),
 License: GPL-3
 Encoding: UTF-8
